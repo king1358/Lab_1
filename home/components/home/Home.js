@@ -5,6 +5,14 @@ import React, { useState } from "react";
 import { StatusBar, ScrollView, Image, TouchableOpacity } from "react-native";
 
 export default function HomeScreen() {
+    const [musicplayed, setMusic] = useState([
+        { name: 'Dịu Dàng Em Đến', img: require('../../assets/Music/dded.jpg'),id : 1 },
+        { name: 'Nắng ấm xa dần', img: require('../../assets/Music/naxd.jpeg'),id:2 },
+        { name: 'Tháng tư là lời nói dối của em', img: require('../../assets/Music/t4llnd.jpg'),id:3 },
+        { name: 'Anh ơi ở lại', img: require('../../assets/Music/aool.jpg'),id:4 },
+        { name: 'Thu Cuối', img: require('../../assets/Music/tc.jpg'),id:5 },
+        { name: 'Tình Yêu Màu Nắng', img: require('../../assets/Music/tymn.png'),id:6 },
+    ]);
     return (
         <LinearGradient
             colors={["#171518", "#171518"]}
@@ -23,11 +31,18 @@ export default function HomeScreen() {
                         <View style={styles.option}>
                             <View style={styles.formOption}>
                                 <Text style={styles.textForm}>Recently Played</Text>
-                                <View>
-                                    <View>
-                                        <View style={styles.img} />
-                                        <Text style={styles.textDivForm}></Text>
-                                    </View>
+                                <View style = {{flexDirection : 'row'}}>
+                                    {musicplayed.map((music) => {
+                                        return (
+
+                                            <View key ={music.id}>
+                                                <Image style={styles.img}
+                                                    source={music.img}
+                                                />
+                                                <Text style={styles.textDivForm}>{music.name}</Text>
+                                            </View>
+                                        )
+                                    })}
                                 </View>
                             </View>
 
@@ -35,31 +50,52 @@ export default function HomeScreen() {
 
                             <View style={styles.formOption}>
                                 <Text style={styles.textForm}>Trend</Text>
-                                <View>
-                                    <View>
-                                        <View style={styles.img} />
-                                        <Text style={styles.textDivForm}></Text>
-                                    </View>
+                                <View style = {{flexDirection : 'row'}}>
+                                    {musicplayed.map((music) => {
+                                        return (
+
+                                            <View key ={music.id}>
+                                                <Image style={styles.img}
+                                                    source={music.img}
+                                                />
+                                                <Text style={styles.textDivForm}>{music.name}</Text>
+                                            </View>
+                                        )
+                                    })}
                                 </View>
                             </View>
 
                             {/* ====================================== */}
                             <View style={styles.formOption}>
                                 <Text style={styles.textForm}>Hot Music</Text>
-                                <View>
-                                    <View>
-                                        <View style={styles.img} />
-                                        <Text style={styles.textDivForm}></Text>
-                                    </View>
+                                <View style = {{flexDirection : 'row'}}>
+                                    {musicplayed.map((music) => {
+                                        return (
+
+                                            <View key ={music.id}>
+                                                <Image style={styles.img}
+                                                    source={music.img}
+                                                />
+                                                <Text style={styles.textDivForm}>{music.name}</Text>
+                                            </View>
+                                        )
+                                    })}
                                 </View>
                             </View>
                             <View style={styles.formOption}>
                                 <Text style={styles.textForm}>Category</Text>
-                                <View >
-                                    <View>
-                                        <View style={styles.img} />
-                                        <Text style={styles.textDivForm}></Text>
-                                    </View>
+                                <View style = {{flexDirection : 'row'}}>
+                                    {musicplayed.map((music) => {
+                                        return (
+
+                                            <View key ={music.id}>
+                                                <Image style={styles.img}
+                                                    source={music.img}
+                                                />
+                                                <Text style={styles.textDivForm}>{music.name}</Text>
+                                            </View>
+                                        )
+                                    })}
                                 </View>
                             </View>
                         </View>
