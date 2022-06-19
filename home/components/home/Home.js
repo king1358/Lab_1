@@ -6,7 +6,7 @@ import { StatusBar, ScrollView, Image, TouchableOpacity } from "react-native";
 
 export default function HomeScreen() {
     const [musicplayed, setMusic] = useState([
-        { name: 'Dịu Dàng Em Đến', img: require('../../assets/Music/dded.jpg'),id : 1 },
+        { name: 'Dịu Dàng Em Đến', img: require('../../assets/Music/dded.jpg'), id : 1},
         { name: 'Nắng ấm xa dần', img: require('../../assets/Music/naxd.jpeg'),id:2 },
         { name: 'Tháng tư là lời nói dối của em', img: require('../../assets/Music/t4llnd.jpg'),id:3 },
         { name: 'Anh ơi ở lại', img: require('../../assets/Music/aool.jpg'),id:4 },
@@ -31,72 +31,86 @@ export default function HomeScreen() {
                         <View style={styles.option}>
                             <View style={styles.formOption}>
                                 <Text style={styles.textForm}>Recently Played</Text>
-                                <View style = {{flexDirection : 'row'}}>
+                                <ScrollView style={styles.scrollHorizontal} horizontal={true}>
                                     {musicplayed.map((music) => {
                                         return (
-
-                                            <View key ={music.id}>
+                                            <TouchableOpacity key ={music.id} 
+                                                onPress={() => {
+                                                    alert(music.name)
+                                                }}>
+                                            <View >
                                                 <Image style={styles.img}
                                                     source={music.img}
                                                 />
                                                 <Text style={styles.textDivForm}>{music.name}</Text>
                                             </View>
+                                            </TouchableOpacity>
                                         )
                                     })}
-                                </View>
+                                </ScrollView>
                             </View>
 
                             {/* ========================================= */}
 
                             <View style={styles.formOption}>
                                 <Text style={styles.textForm}>Trend</Text>
-                                <View style = {{flexDirection : 'row'}}>
+                                <ScrollView style={styles.scrollHorizontal} horizontal={true}>
                                     {musicplayed.map((music) => {
                                         return (
-
+                                            <TouchableOpacity key ={music.id}
+                                            onPress={() => { //call playing music UI
+                                                alert(music.name)
+                                            }}>
                                             <View key ={music.id}>
                                                 <Image style={styles.img}
                                                     source={music.img}
                                                 />
                                                 <Text style={styles.textDivForm}>{music.name}</Text>
                                             </View>
+                                            </TouchableOpacity>
                                         )
                                     })}
-                                </View>
+                                </ScrollView>
                             </View>
 
                             {/* ====================================== */}
                             <View style={styles.formOption}>
                                 <Text style={styles.textForm}>Hot Music</Text>
-                                <View style = {{flexDirection : 'row'}}>
+                                <ScrollView style={styles.scrollHorizontal} horizontal={true}>
                                     {musicplayed.map((music) => {
                                         return (
-
+                                            <TouchableOpacity key ={music.id} onPress={() => {
+                                                alert(music.name)
+                                            }}>
                                             <View key ={music.id}>
                                                 <Image style={styles.img}
                                                     source={music.img}
                                                 />
                                                 <Text style={styles.textDivForm}>{music.name}</Text>
                                             </View>
+                                            </TouchableOpacity>
                                         )
                                     })}
-                                </View>
+                                </ScrollView>
                             </View>
                             <View style={styles.formOption}>
                                 <Text style={styles.textForm}>Category</Text>
-                                <View style = {{flexDirection : 'row'}}>
+                                <ScrollView style={styles.scrollHorizontal} horizontal={true}>
                                     {musicplayed.map((music) => {
                                         return (
-
+                                            <TouchableOpacity key ={music.id} onPress={() => {
+                                                alert(music.name)
+                                            }}>
                                             <View key ={music.id}>
                                                 <Image style={styles.img}
                                                     source={music.img}
                                                 />
                                                 <Text style={styles.textDivForm}>{music.name}</Text>
                                             </View>
+                                            </TouchableOpacity>
                                         )
                                     })}
-                                </View>
+                                </ScrollView>
                             </View>
                         </View>
                     </View>
