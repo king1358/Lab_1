@@ -1,121 +1,132 @@
 import { StyleSheet, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { useSelector } from "react-redux";
 import React, { useState } from "react";
 import { StatusBar, ScrollView, Image, TouchableOpacity } from "react-native";
+import { useEffect } from "react";
 
 export default function HomeScreen() {
-    const [musicplayed, setMusic] = useState([
-        { name: 'Dịu Dàng Em Đến', img: require('../../assets/Music/dded.jpg'), id : 1},
-        { name: 'Nắng ấm xa dần', img: require('../../assets/Music/naxd.jpeg'),id:2 },
-        { name: 'Tháng tư là lời nói dối của em', img: require('../../assets/Music/t4llnd.jpg'),id:3 },
-        { name: 'Anh ơi ở lại', img: require('../../assets/Music/aool.jpg'),id:4 },
-        { name: 'Thu Cuối', img: require('../../assets/Music/tc.jpg'),id:5 },
-        { name: 'Tình Yêu Màu Nắng', img: require('../../assets/Music/tymn.png'),id:6 },
-    ]);
+    const [musicplayed, setMusic] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const getMusicFromApi = async () => {
+        const resp = await fetch("https://denzqfapjoywlunugtbe.supabase.co/rest/v1/Music?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRlbnpxZmFwam95d2x1bnVndGJlIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTM1Njc2MTAsImV4cCI6MTk2OTE0MzYxMH0.phhqYflVrlaS3Lb9lsxe21sgJH2ZSW1HKDHN8RQqy1Y");
+        const data = await resp.json();
+        setMusic(data);
+        setLoading(false);
+    };
+    useEffect(() => {
+        getMusicFromApi()
+    }, [])
     return (
         <LinearGradient
-            colors={["#171518", "#171518"]}
+            colors={["#171518", "#171018"]}
             end={[0.05, 0.5]}
             style={styles.LinearGradient}
         >
-            <View style={styles.container}>
-                <ScrollView style={{ flex: 1 }}>
-                    <View style={styles.header}>
-                        <Text style={styles.textHeader}>Home</Text>
-                    </View>
-                    <View
-                        style={{ borderBottomColor: "white", borderBottomWidth: 1.75 }}
-                    />
-                    <View style={styles.body}>
-                        <View style={styles.option}>
-                            <View style={styles.formOption}>
-                                <Text style={styles.textForm}>Recently Played</Text>
-                                <ScrollView style={styles.scrollHorizontal} horizontal={true}>
-                                    {musicplayed.map((music) => {
-                                        return (
-                                            <TouchableOpacity key ={music.id} 
-                                                onPress={() => {
-                                                    alert(music.name)
-                                                }}>
-                                            <View >
-                                                <Image style={styles.img}
-                                                    source={music.img}
-                                                />
-                                                <Text style={styles.textDivForm}>{music.name}</Text>
-                                            </View>
-                                            </TouchableOpacity>
-                                        )
-                                    })}
-                                </ScrollView>
-                            </View>
+            {loading && (
+                <View style={{ alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+                    <Text style={{ color: 'white', fontWeight: "bold", fontSize: 20 }}>Loading API...</Text>
+                </View>
+            )}
+            {musicplayed && (
+                <View style={styles.container}>
+                    <ScrollView style={{ flex: 1 }}>
+                        <View style={styles.header}>
+                            <Text style={styles.textHeader}>Home</Text>
+                        </View>
 
-                            {/* ========================================= */}
+                        <View
+                            style={{ borderBottomColor: "white", borderBottomWidth: 1.75 }}
+                        />
+                        <View style={styles.body}>
+                            <View style={styles.option}>
+                                <View style={styles.formOption}>
+                                    <Text style={styles.textForm}>Recently Played</Text>
+                                    <ScrollView style={styles.scrollHorizontal} horizontal={true}>
+                                        {musicplayed.map((music) => {
+                                            return (
+                                                <TouchableOpacity key={music.id}
+                                                    onPress={() => {
+                                                        alert(JSON.stringify(music, null, 4))
+                                                    }}>
+                                                    <View >
+                                                        <Image style={styles.img}
+                                                            source={{ uri: music.image }}
+                                                        />
+                                                        <Text style={styles.textDivForm}>{music.name}</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                            )
+                                        })}
+                                    </ScrollView>
+                                </View>
 
-                            <View style={styles.formOption}>
-                                <Text style={styles.textForm}>Trend</Text>
-                                <ScrollView style={styles.scrollHorizontal} horizontal={true}>
-                                    {musicplayed.map((music) => {
-                                        return (
-                                            <TouchableOpacity key ={music.id}
-                                            onPress={() => { //call playing music UI
-                                                alert(music.name)
-                                            }}>
-                                            <View key ={music.id}>
-                                                <Image style={styles.img}
-                                                    source={music.img}
-                                                />
-                                                <Text style={styles.textDivForm}>{music.name}</Text>
-                                            </View>
-                                            </TouchableOpacity>
-                                        )
-                                    })}
-                                </ScrollView>
-                            </View>
 
-                            {/* ====================================== */}
-                            <View style={styles.formOption}>
-                                <Text style={styles.textForm}>Hot Music</Text>
-                                <ScrollView style={styles.scrollHorizontal} horizontal={true}>
-                                    {musicplayed.map((music) => {
-                                        return (
-                                            <TouchableOpacity key ={music.id} onPress={() => {
-                                                alert(music.name)
-                                            }}>
-                                            <View key ={music.id}>
-                                                <Image style={styles.img}
-                                                    source={music.img}
-                                                />
-                                                <Text style={styles.textDivForm}>{music.name}</Text>
-                                            </View>
-                                            </TouchableOpacity>
-                                        )
-                                    })}
-                                </ScrollView>
-                            </View>
-                            <View style={styles.formOption}>
-                                <Text style={styles.textForm}>Category</Text>
-                                <ScrollView style={styles.scrollHorizontal} horizontal={true}>
-                                    {musicplayed.map((music) => {
-                                        return (
-                                            <TouchableOpacity key ={music.id} onPress={() => {
-                                                alert(music.name)
-                                            }}>
-                                            <View key ={music.id}>
-                                                <Image style={styles.img}
-                                                    source={music.img}
-                                                />
-                                                <Text style={styles.textDivForm}>{music.name}</Text>
-                                            </View>
-                                            </TouchableOpacity>
-                                        )
-                                    })}
-                                </ScrollView>
+                                <View style={styles.formOption}>
+                                    <Text style={styles.textForm}>Trend</Text>
+                                    <ScrollView style={styles.scrollHorizontal} horizontal={true}>
+                                        {musicplayed.map((music) => {
+                                            return (
+                                                <TouchableOpacity key={music.id}
+                                                    onPress={() => {
+                                                        alert(JSON.stringify(music, null, 4))
+                                                    }}>
+                                                    <View >
+                                                        <Image style={styles.img}
+                                                            source={{ uri: music.image }}
+                                                        />
+                                                        <Text style={styles.textDivForm}>{music.name}</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                            )
+                                        })}
+                                    </ScrollView>
+                                </View>
+
+                                <View style={styles.formOption}>
+                                    <Text style={styles.textForm}>Hot Music</Text>
+                                    <ScrollView style={styles.scrollHorizontal} horizontal={true}>
+                                        {musicplayed.map((music) => {
+                                            return (
+                                                <TouchableOpacity key={music.id}
+                                                    onPress={() => {
+                                                        alert(JSON.stringify(music, null, 4))
+                                                    }}>
+                                                    <View >
+                                                        <Image style={styles.img}
+                                                            source={{ uri: music.image }}
+                                                        />
+                                                        <Text style={styles.textDivForm}>{music.name}</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                            )
+                                        })}
+                                    </ScrollView>
+                                </View>
+                                <View style={styles.formOption}>
+                                    <Text style={styles.textForm}>Category</Text>
+                                    <ScrollView style={styles.scrollHorizontal} horizontal={true}>
+                                        {musicplayed.map((music) => {
+                                            return (
+                                                <TouchableOpacity key={music.id}
+                                                    onPress={() => {
+                                                        alert(JSON.stringify(music, null, 4))
+                                                    }}>
+                                                    <View >
+                                                        <Image style={styles.img}
+                                                            source={{ uri: music.image }}
+                                                        />
+                                                        <Text style={styles.textDivForm}>{music.name}</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                            )
+                                        })}
+                                    </ScrollView>
+                                </View>
                             </View>
                         </View>
-                    </View>
-                </ScrollView>
-            </View>
+                    </ScrollView>
+                </View>
+            )}
         </LinearGradient>
     )
 }
@@ -125,7 +136,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     container: {
-        flex: 10,
+        flex: 1,
         paddingTop: StatusBar.currentHeight,
     },
     header: {
