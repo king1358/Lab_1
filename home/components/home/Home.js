@@ -7,14 +7,14 @@ import { useEffect } from "react";
 export default function HomeScreen() {
     const [musicplayed, setMusic] = useState([]);
     const [loading, setLoading] = useState(true);
-    const getMusicFromApi = async () => {
-        const resp = await fetch("https://denzqfapjoywlunugtbe.supabase.co/rest/v1/Music?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRlbnpxZmFwam95d2x1bnVndGJlIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTM1Njc2MTAsImV4cCI6MTk2OTE0MzYxMH0.phhqYflVrlaS3Lb9lsxe21sgJH2ZSW1HKDHN8RQqy1Y");
-        const data = await resp.json();
-        setMusic(data);
-        setLoading(false);
-    };
+    function setLoad(){
+        setLoading(false)
+    }
+
     useEffect(() => {
-        getMusicFromApi()
+        const musics = require('../../dataLocal/data.json');
+        setMusic(musics)
+        setTimeout(setLoad, 1000);
     }, [])
     return (
         <LinearGradient
